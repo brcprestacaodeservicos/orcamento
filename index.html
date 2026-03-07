@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Gerador de Orçamento</title>
+<title>Gerador de Nota Fiscal</title>
 
 <style>
 
@@ -150,10 +150,8 @@ max-width:100%;
 <div class="container">
 
 <div class="card">
-<div class="header">
 
-<img id="logoEmpresa" class="logoEmpresa">
-<h3>Gerador de Orçamento</h3>
+<h3>Gerador de Nota Fiscal</h3>
 
 <label>Selecionar empresa</label>
 <select id="empresaSelect">
@@ -167,8 +165,16 @@ max-width:100%;
 
 <div class="col">
 
-<label>Logo da empresa (CTRL + V)</label>
-<div class="logoBox" id="logoBox">Cole o logo aqui</div>
+<div class="header">
+
+<img id="logoEmpresa" class="logoEmpresa" src="" alt="Logo da empresa">
+
+<div class="titulo">
+Gerador de Orçamento
+</div>
+
+</div>
+
 
 <label>Empresa</label>
 <textarea id="empresa"></textarea>
@@ -234,7 +240,7 @@ max-width:100%;
 
 <div class="assinaturaBox">
 
-<div>___________________________</div>
+<div>__________________________________</div>
 <input id="assinaturaNome" placeholder="Nome do responsável">
 
 </div>
@@ -262,7 +268,8 @@ empresa:"BRIAN COUTINHO COMÉRCIO VAREJISTA ME",
 cnpj:"63.861.662/0001-76",
 endereco:"Rua Holambra, 231, Colinas Mª Luiza, Cajamar, SP",
 telefone:"(11) 91658-2651",
-email:"briancoutinhocomerciovarejista@gmail.com"
+email:"briancoutinhocomerciovarejista@gmail.com",
+logo:"logobc.jpg"
 },
 
 girassol:{
@@ -270,7 +277,8 @@ empresa:"GIRASSOL FREITAS IMPORTAÇÕES E ASSESSORIA EDUCACIONAL LTDA",
 cnpj:"59.346.291/0001-17",
 endereco:"Rua Campos do Jordão, Condomínio Treviso",
 telefone:"(11) 97632-6551",
-email:"girassolfreitasassessoria@gmail.com"
+email:"girassolfreitasassessoria@gmail.com",
+logo:"logogirassol.jpg"
 },
 
 brc:{
@@ -278,8 +286,10 @@ empresa:"BRC - PRESTAÇÃO DE SERVIÇOS",
 cnpj:"63.748.267/0001-81",
 endereco:"Rua Holambra, 231, Colinas Mª Luiza, Cajamar, SP",
 telefone:"(11) 97317-7616",
-email:"brcprestacaodeservicos@gmail.com"
+email:"brcprestacaodeservicos@gmail.com",
+logo:"logobrc.png"
 }
+
 
 }
 
@@ -394,4 +404,3 @@ addItem()
 
 </body>
 </html>
-
