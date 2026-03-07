@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gerador de Orçamento</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f4f6fb;
+margin:0;
+padding:15px;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+}
+
+.card{
+background:white;
+padding:15px;
+border-radius:8px;
+box-shadow:0 2px 8px rgba(0,0,0,0.08);
+margin-bottom:10px;
+}
+
+.row{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.col{
+flex:1;
+min-width:220px;
+}
+
+label{
+font-size:11px;
+color:#555;
+}
+
+input, textarea, select{
+width:100%;
+padding:6px;
+border-radius:5px;
+border:1px solid #ddd;
+margin-top:3px;
+font-size:12px;
+}
+
+textarea{
+height:50px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:10px;
+font-size:12px;
+}
+
+th,td{
+border-bottom:1px solid #eee;
+padding:6px;
+}
+
+button{
+background:#0b63d6;
+color:white;
+border:none;
+padding:8px 12px;
+border-radius:5px;
+cursor:pointer;
+margin-top:8px;
+}
+
+.logoBox{
+border:2px dashed #ccc;
+padding:6px;
+text-align:center;
+margin-bottom:8px;
+min-height:60px;
+font-size:12px;
+}
+
+.logoBox img{
+max-height:60px;
+}
+
+.assinaturaArea{
+margin-top:30px;
+display:flex;
+justify-content:space-between;
+align-items:flex-end;
+}
+
+.assinaturaBox{
+width:40%;
+text-align:center;
+}
+
+.carimboBox{
+width:40%;
+}
+
+.carimbo{
+border:3px solid black;
+padding:10px;
+font-size:11px;
+}
+
+.total{
+text-align:right;
+font-weight:bold;
+font-size:14px;
+margin-top:5px;
+}
+
+@page{
+size:A4;
+margin:10mm;
+}
+
+@media print{
+
+button{
+display:none;
+}
+
+body{
+background:white;
+padding:0;
+}
+
+.container{
+max-width:100%;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+
+<h3>Gerador de Nota Fiscal</h3>
+
+<label>Selecionar empresa</label>
+<select id="empresaSelect">
+<option value="">Escolher empresa</option>
+<option value="brian">Brian Coutinho Comércio Varejista</option>
+<option value="girassol">Girassol Freitas Assessoria Educacional</option>
+<option value="brc">BRC - Prestação de Serviços</option>
+</select>
+
+<div class="row">
+
+<div class="col">
+
+<label>Logo da empresa (CTRL + V)</label>
+<div class="logoBox" id="logoBox">Cole o logo aqui</div>
+
+<label>Empresa</label>
+<textarea id="empresa"></textarea>
+
+<label>CNPJ</label>
+<input id="cnpj">
+
+<label>Endereço</label>
+<input id="endereco">
+
+<label>Telefone</label>
+<input id="telefone">
+
+<label>E-mail</label>
+<input id="email">
+
+</div>
+
+<div class="col">
+
+<label>Cliente</label>
+<textarea id="cliente"></textarea>
+
+<label>Nº Nota</label>
+<input id="numeroNota">
+
+<label>Data</label>
+<input id="dataNota">
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<table id="tabelaItens">
+
+<thead>
+<tr>
+<th>Descrição</th>
+<th width="80">Qtd</th>
+<th width="120">Valor</th>
+<th width="120">Total</th>
+<th width="40"></th>
+</tr>
+</thead>
+
+<tbody></tbody>
+
+</table>
+
+<button onclick="addItem()">Adicionar item</button>
+
+<div class="total" id="totalGeral">Total: R$ 0,00</div>
+
+</div>
+
+<div class="card">
+
+<div class="assinaturaArea">
+
+<div class="assinaturaBox">
+
+<div>___________________________</div>
+<input id="assinaturaNome" placeholder="Nome do responsável">
+
+</div>
+
+<div class="carimboBox">
+
+<div id="carimbo" class="carimbo"></div>
+
+</div>
+
+</div>
+
+</div>
+
+<button onclick="window.print()">Imprimir / PDF</button>
+
+</div>
+
+<script>
+
+const empresas = {
+
+brian:{
+empresa:"BRIAN COUTINHO COMÉRCIO VAREJISTA ME",
+cnpj:"63.861.662/0001-76",
+endereco:"Rua Holambra, 231, Colinas Mª Luiza, Cajamar, SP",
+telefone:"(11) 91658-2651",
+email:"briancoutinhocomerciovarejista@gmail.com"
+},
+
+girassol:{
+empresa:"GIRASSOL FREITAS IMPORTAÇÕES E ASSESSORIA EDUCACIONAL LTDA",
+cnpj:"59.346.291/0001-17",
+endereco:"Rua Campos do Jordão, Condomínio Treviso",
+telefone:"(11) 97632-6551",
+email:"girassolfreitasassessoria@gmail.com"
+},
+
+brc:{
+empresa:"BRC - PRESTAÇÃO DE SERVIÇOS",
+cnpj:"63.748.267/0001-81",
+endereco:"Rua Holambra, 231, Colinas Mª Luiza, Cajamar, SP",
+telefone:"(11) 97317-7616",
+email:"brcprestacaodeservicos@gmail.com"
+}
+
+}
+
+const empresaInput = document.getElementById("empresa")
+const cnpjInput = document.getElementById("cnpj")
+const enderecoInput = document.getElementById("endereco")
+const telefoneInput = document.getElementById("telefone")
+const emailInput = document.getElementById("email")
+const carimbo = document.getElementById("carimbo")
+const logoBox = document.getElementById("logoBox")
+
+document.getElementById("empresaSelect").addEventListener("change",function(){
+
+let e = empresas[this.value]
+
+if(!e) return
+
+empresaInput.value = e.empresa
+cnpjInput.value = e.cnpj
+enderecoInput.value = e.endereco
+telefoneInput.value = e.telefone
+emailInput.value = e.email
+
+updateCarimbo()
+
+})
+
+function addItem(){
+
+let tr=document.createElement("tr")
+
+tr.innerHTML=`
+<td><input class="desc"></td>
+<td><input type="number" class="qtd" value="1"></td>
+<td><input type="number" class="valor" value="0"></td>
+<td class="totalItem">0.00</td>
+<td><button onclick="this.parentElement.parentElement.remove();calc()">X</button></td>
+`
+
+document.querySelector("#tabelaItens tbody").appendChild(tr)
+
+tr.querySelectorAll("input").forEach(i=>i.addEventListener("input",calc))
+
+}
+
+function calc(){
+
+let total=0
+
+document.querySelectorAll("#tabelaItens tbody tr").forEach(r=>{
+
+let q=Number(r.querySelector(".qtd").value)
+let v=Number(r.querySelector(".valor").value)
+
+let t=q*v
+
+r.querySelector(".totalItem").innerText=t.toFixed(2)
+
+total+=t
+
+})
+
+document.getElementById("totalGeral").innerText="Total: R$ "+total.toFixed(2)
+
+}
+
+function updateCarimbo(){
+
+carimbo.innerHTML=`
+<b>${empresaInput.value}</b><br>
+CNPJ: ${cnpjInput.value}<br>
+${enderecoInput.value}<br>
+${telefoneInput.value}<br>
+${emailInput.value}
+`
+
+}
+
+[empresaInput,cnpjInput,enderecoInput,telefoneInput,emailInput].forEach(el=>{
+el.addEventListener("input",updateCarimbo)
+})
+
+document.addEventListener("paste",function(e){
+
+let items=e.clipboardData.items
+
+for(let i=0;i<items.length;i++){
+
+if(items[i].type.indexOf("image")!==-1){
+
+let blob=items[i].getAsFile()
+
+let reader=new FileReader()
+
+reader.onload=function(event){
+logoBox.innerHTML="<img src='"+event.target.result+"'>"
+}
+
+reader.readAsDataURL(blob)
+
+}
+
+}
+
+})
+
+document.getElementById("dataNota").value = new Date().toLocaleDateString("pt-BR")
+
+addItem()
+
+</script>
+
+</body>
+</html>
