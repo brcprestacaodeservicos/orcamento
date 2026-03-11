@@ -1,8 +1,10 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>Gerador de Orçamento</title>
 
 <style>
@@ -107,11 +109,6 @@ width:40%;
 text-align:center;
 }
 
-.assinaturaImg{
-max-height:70px;
-margin-bottom:5px;
-}
-
 .carimboBox{
 width:40%;
 }
@@ -127,6 +124,16 @@ text-align:right;
 font-weight:bold;
 font-size:14px;
 margin-top:5px;
+}
+
+.assinaturaImg{
+max-height:70px;
+margin-bottom:5px;
+}
+
+.infoBox{
+font-size:12px;
+line-height:1.6;
 }
 
 @page{
@@ -249,7 +256,7 @@ Total: R$ 0,00
 
 </div>
 
-<div class="card">
+<div class="card infoBox">
 
 <b>FORMA DE PAGAMENTO</b><br>
 Faturado 30 (trinta) dias, Pix e cartão de crédito<br>
@@ -307,7 +314,7 @@ cnpj:"63.861.662/0001-76",
 endereco:"Rua Holambra, 231, Colinas Mª Luiza, Cajamar, SP",
 telefone:"(11) 91658-2651",
 email:"briancoutinhocomerciovarejista@gmail.com",
-logo:"logobc.jpg",
+logo:"logobc.jpeg",
 assinatura:"assbrian.jpg",
 responsavel:"Brian C. C. de Lima"
 },
@@ -318,8 +325,8 @@ cnpj:"59.346.291/0001-17",
 endereco:"Rua Campos do Jordão, Condomínio Treviso",
 telefone:"(11) 97632-6551",
 email:"girassolfreitasassessoria@gmail.com",
-logo:"logogirassol.jpg",
-assinatura:"assgirassol.jpeg",
+logo:"logogirassol.jpeg",
+assinatura:"assgirassol.jpg",
 responsavel:"Allef Freitas"
 },
 
@@ -330,7 +337,7 @@ endereco:"Rua Holambra, 231, Colinas Mª Luiza, Cajamar, SP",
 telefone:"(11) 97317-7616",
 email:"brcprestacaodeservicos@gmail.com",
 logo:"logobrc.jpeg",
-assinatura:"assbrc.jpeg",
+assinatura:"assbrc.jpg",
 responsavel:"Darcio R. de Lima"
 }
 
@@ -356,7 +363,6 @@ telefoneInput.value=e.telefone
 emailInput.value=e.email
 
 document.getElementById("logoEmpresa").src=e.logo
-
 document.getElementById("assinaturaImg").src=e.assinatura
 document.getElementById("assinaturaNome").value=e.responsavel
 
@@ -427,4 +433,3 @@ addItem()
 
 </body>
 </html>
-
